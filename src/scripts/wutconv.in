@@ -1,0 +1,200 @@
+#! /usr/bin/env bash
+##########################################################################
+##									##
+##	wutconv is automatically generated,				##
+##		please do not modify!					##
+##									##
+##########################################################################
+
+##########################################################################
+##									##
+## Script ID: wutconv							##
+## Author: Mark Grant							##
+##									##
+## Purpose:								##
+## Retrieves one or more files whose URL's are specified in a text file.##
+##                                                              	##
+## Syntax:      wutconv [OPTIONS] TextFileName TextFileName1 ...	##
+##			[OPTIONS] are:-					##
+##	-h Displays usage information.					##
+##	-u Convert to Unix line endings.				##
+##	-V Displays version information.				##
+##	-w Convert to Windows line endings.				##
+##									##
+## Exit Codes:	0 & 64 - 113 as per C/C++ standard			##
+##		0 - success						##
+##		64 - Invalid arguments					##
+##		66 - File access error					##
+##		67 - trap received					##
+##		77 - Permissions error					##
+##									##
+##########################################################################
+
+##########################################################################
+##									##
+## Changelog								##
+##									##
+## Date		Author	Version	Description				##
+##									##
+## 04/09/2014	MG	1.0.1	First release.				##
+##									##
+##########################################################################
+
+
+####################
+## Init variables ##
+####################
+script_exit_code=0
+version="1.0.1"			# set version variable
+outputprefix="wutconv: "
+
+unix=FALSE
+windows=FALSE
+
+###############
+## Functions ##
+###############
+
+# Output $1 to stdout or stderr depending on $2
+output()
+{
+	if [ $2 = 0 ]
+	then
+		echo "$outputprefix$1"
+	else
+		echo "$outputprefix$1" 1>&2
+	fi
+}
+
+# Standard function to test command error ($1 is $?) and exit if non-zero
+std_cmd_err_handler()
+{
+	if [ $1 != 0 ]
+	then
+		script_exit_code=$1
+		script_exit
+	fi
+}
+
+# Standard function to tidy up and return exit code
+script_exit()
+{
+	exit $script_exit_code
+}
+
+# Standard trap exit function
+trap_exit()
+{
+script_exit_code=67
+output "Script terminating due to trap received. Code: "$script_exit_code 1
+script_exit
+}
+
+# Setup trap
+trap trap_exit SIGHUP SIGINT SIGTERM
+
+##########
+## Main ##
+##########
+# Process command line arguments with getopts.
+# Options u and w are mutually exclusive.
+while getopts :huVw arg
+do
+	case $arg in
+	h)	echo "Usage is $0 [OPTIONS]" TextFileName TextFileName1 ...
+		echo "	[OPTIONS] are:-"
+		echo "	'-h' Displays usage information."
+		echo "	'-u' Convert to Unix line endings."
+		echo "	'-V' Displays version information."
+		echo "	'-w' Convert to Windows line endings."
+		script_exit_code=0
+		script_exit
+		;;
+	u)	if [ $windows = TRUE ]
+		then
+			script_exit_code=64
+			output "Cannot specify options u AND w." 1
+			script_exit
+		fi
+		unix=TRUE
+		;;
+	V)	echo "$0 version "$version
+		script_exit_code=0
+		script_exit
+		;;
+	w)	if [ $unix = TRUE ]
+		then
+			script_exit_code=64
+			output "Cannot specify options w AND u." 1
+			script_exit
+		fi
+		windows=TRUE
+		;;
+	:)	script_exit_code=64
+		output "Must supply an argument to -$OPTARG." 1
+		script_exit
+		;;
+	\?)	script_exit_code=64
+		output "Invalid argument -$OPTARG." 1
+		script_exit
+		;;
+	esac
+done
+
+# Either u or w flag must be set.
+if [ $windows = FALSE -a $unix = FALSE ]
+then
+	script_exit_code=64
+	output "Either -u or -w must be set." 1
+	script_exit
+fi
+
+# There must be at least 1 filename.
+if [ $# -lt $OPTIND ]
+then
+	script_exit_code=64
+	output "At least 1 filename is required." 1
+	script_exit
+fi
+
+# Remove the getopts arguments leaving the filenames to process.
+shift $(($OPTIND - 1))
+
+# Process files in sequence. The for line == for arg in $@
+for arg
+do
+	if [ -f $arg ]	# Is it a regular file.
+	then
+		if [ -r $arg -a -w $arg ]	# Is it readable and writable.
+		then
+			if [ $unix = TRUE ]
+			then	# Convert to Unix line endings.
+				awk '{if (substr($0,length,1)=="\r")
+					sub(/\r$/, "");
+					print;}' $arg > $arg.tmp \
+					&& mv -f $arg.tmp $arg
+				status=$?
+				output "Converted file "$arg" to Unix format complete with status "$status $status
+				((script_exit_code=$script_exit_code + $status))
+			else	# Convert to Windows line endings.
+				awk '{if (substr($0,length,1)!="\r")
+					sub(/$/, "\r");
+					print;}' $arg > $arg.tmp \
+					&& mv -f $arg.tmp $arg
+				status=$?
+				output "Converted file "$arg" to Windows format complete with status "$status $status
+				((script_exit_code=$script_exit_code + $status))
+			fi
+		else
+			output "File "$arg" does not have the correct permissions." 1
+			((script_exit_code=$script_exit_code + 1))
+		fi
+	else
+		output "File "$arg" does not exist or is not a regular file." 1
+		((script_exit_code=$script_exit_code + 1))
+	fi
+done
+
+# And exit
+output "Script complete with exit code: "$script_exit_code $script_exit_code
+script_exit
