@@ -16,6 +16,8 @@
 ## Date		Author	Version	Description				##
 ##									##
 ## 04/09/2014	MG	1.0.1	First release.				##
+## 29/11/2014	MG	1.0.2	Add script substitution variable for	##
+##				overall package version.		##
 ##									##
 ##########################################################################
 
@@ -25,7 +27,7 @@ edit = sed \
 	-e 's|@pkgdatadir[@]|$(pkgdatadir)|g' \
 	-e 's|@sysconfdir[@]|$(sysconfdir)|g' \
 	-e 's|@prefix[@]|$(prefix)|g' \
-	-e 's|@DWNUTIL[@]|$(DWNUTIL)|g'
+	-e 's|@pkgversion[@]|$(pkgversion)|g'
 
 scriptssrcdir = $(srcdir)
 

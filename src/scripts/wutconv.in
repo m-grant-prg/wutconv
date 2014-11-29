@@ -39,6 +39,7 @@
 ## 04/09/2014	MG	1.0.1	First release.				##
 ## 29/11/2014	MG	1.0.2	Switch to use GNU getopt to enable long	##
 ##				options.				##
+## 29/11/2014	MG	1.0.3	Add overall package version to -V.	##
 ##									##
 ##########################################################################
 
@@ -50,6 +51,7 @@ script_exit_code=0
 version="1.0.2"				# set version variable
 outputprefix="wutconv: "
 osname=$(uname -s)			# Get system name for OS differentiation
+packageversion=@pkgversion@		# Version of the complete package
 
 unix=FALSE
 windows=FALSE
@@ -150,7 +152,8 @@ do
 		shift
 		;;
 	-V|--version)
-		echo "$0 Version "$version
+		echo "$0 Script version "$version
+		echo "$0 Package version "$packageversion
 		shift
 		script_exit_code=0
 		script_exit
