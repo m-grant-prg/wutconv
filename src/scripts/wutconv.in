@@ -48,7 +48,7 @@
 ## Init variables ##
 ####################
 script_exit_code=0
-version="1.0.2"				# set version variable
+version="1.0.3"				# set version variable
 outputprefix="wutconv: "
 osname=$(uname -s)			# Get system name for OS differentiation
 packageversion=@pkgversion@		# Version of the complete package
