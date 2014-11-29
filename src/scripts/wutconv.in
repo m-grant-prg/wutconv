@@ -12,14 +12,14 @@
 ## Author: Mark Grant							##
 ##									##
 ## Purpose:								##
-## Retrieves one or more files whose URL's are specified in a text file.##
+## Converts one or more text file to windows or unix line endings.	##
 ##                                                              	##
 ## Syntax:      wutconv [OPTIONS] TextFileName TextFileName1 ...	##
 ##			[OPTIONS] are:-					##
-##	-h Displays usage information.					##
-##	-u Convert to Unix line endings.				##
-##	-V Displays version information.				##
-##	-w Convert to Windows line endings.				##
+##	-h, --help Displays usage information.				##
+##	-u, --unix Convert to Unix line endings.			##
+##	-V, --version Displays version information.			##
+##	-w, --windows Convert to Windows line endings.			##
 ##									##
 ## Exit Codes:	0 & 64 - 113 as per C/C++ standard			##
 ##		0 - success						##
@@ -37,6 +37,8 @@
 ## Date		Author	Version	Description				##
 ##									##
 ## 04/09/2014	MG	1.0.1	First release.				##
+## 29/11/2014	MG	1.0.2	Switch to use GNU getopt to enable long	##
+##				options.				##
 ##									##
 ##########################################################################
 
@@ -45,11 +47,21 @@
 ## Init variables ##
 ####################
 script_exit_code=0
-version="1.0.1"			# set version variable
+version="1.0.2"				# set version variable
 outputprefix="wutconv: "
+osname=$(uname -s)			# Get system name for OS differentiation
 
 unix=FALSE
 windows=FALSE
+
+# See getopt comments at the start of "Main"
+case $osname in
+*BSD)	binlocation=@bindir@"/"
+	;;
+# Linux)	Allow fall through for now as the defaults are linux.
+*)	binlocation=""
+	;;
+esac
 
 ###############
 ## Functions ##
@@ -96,46 +108,68 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 ##########
 ## Main ##
 ##########
-# Process command line arguments with getopts.
+# Process command line arguments with GNU getopt.
+# (BSD includes, out of the box, a dodgy, feature lacking getopt program
+# installed in /usr/bin. A GNU compatable getopt package is available to install
+# and this gets installed in the bindir, ie /usr/local/bin. This means that the
+# dodgy getopt version is always found first on the PATH. In order to invoke the
+# correct program, $binlocation, (from Makefile bindir), is inserted in the command
+# line below to specify the full path). (Linux GNU getopt can be found on PATH so
+# binlocation ="").
+
 # Options u and w are mutually exclusive.
-while getopts :huVw arg
+
+GETOPTTEMP=`"$binlocation"getopt -o huVw --long help,unix,version,windows -n "$0" -- "$@"`
+std_cmd_err_handler $?
+
+eval set -- "$GETOPTTEMP"
+std_cmd_err_handler $?
+
+while true
 do
-	case $arg in
-	h)	echo "Usage is $0 [OPTIONS]" TextFileName TextFileName1 ...
+	case "$1" in
+	-h|--help)
+		echo "Usage is $0 [OPTIONS]" TextFileName TextFileName1 ...
 		echo "	[OPTIONS] are:-"
-		echo "	'-h' Displays usage information."
-		echo "	'-u' Convert to Unix line endings."
-		echo "	'-V' Displays version information."
-		echo "	'-w' Convert to Windows line endings."
+		echo "	'-h or --help' Displays usage information."
+		echo "	'-u or --unix' Convert to Unix line endings."
+		echo "	'-V or --version' Displays version information."
+		echo "	'-w or --windows' Convert to Windows line endings."
+		shift
 		script_exit_code=0
 		script_exit
 		;;
-	u)	if [ $windows = TRUE ]
+	-u|--unix)
+		if [ $windows = TRUE ]
 		then
 			script_exit_code=64
 			output "Cannot specify options u AND w." 1
 			script_exit
 		fi
 		unix=TRUE
+		shift
 		;;
-	V)	echo "$0 version "$version
+	-V|--version)
+		echo "$0 Version "$version
+		shift
 		script_exit_code=0
 		script_exit
 		;;
-	w)	if [ $unix = TRUE ]
+	-w|--windows)
+		if [ $unix = TRUE ]
 		then
 			script_exit_code=64
 			output "Cannot specify options w AND u." 1
 			script_exit
 		fi
 		windows=TRUE
+		shift
 		;;
-	:)	script_exit_code=64
-		output "Must supply an argument to -$OPTARG." 1
-		script_exit
+	--)	shift
+		break
 		;;
-	\?)	script_exit_code=64
-		output "Invalid argument -$OPTARG." 1
+	*)	script_exit_code=1
+		output "Internal error." 1
 		script_exit
 		;;
 	esac
@@ -150,15 +184,12 @@ then
 fi
 
 # There must be at least 1 filename.
-if [ $# -lt $OPTIND ]
+if [ $# -lt 1 ]
 then
 	script_exit_code=64
 	output "At least 1 filename is required." 1
 	script_exit
 fi
-
-# Remove the getopts arguments leaving the filenames to process.
-shift $(($OPTIND - 1))
 
 # Process files in sequence. The for line == for arg in $@
 for arg

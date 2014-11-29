@@ -1,14 +1,14 @@
 NAME
-wutconv - convert a text file to Windows or Unix line endings.
+wutconv - converts one or more text files to Windows or Unix line endings.
 SYNOPSIS
 wutconv [OPTION] TextFileName TextFileName1 ...
 DESCRIPTION
 Converts the line endings in one or more text files to Windows or Unix format, i.e. LFCR or LF.
 OPTIONS
--h	Displays usage information.
--u	Convert to Unix line endings.
--V	Displays version information.
--w	Convert to Windows line endings.
+-h, --help	Displays usage information.
+-u, --unix	Convert to Unix line endings.
+-V, --version	Displays version information.
+-w, --windows	Convert to Windows line endings.
 EXIT STATUS
 0
 if OK,
