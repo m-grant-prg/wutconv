@@ -1,7 +1,7 @@
 NAME
 wutconv - converts input lines to Windows or Unix line endings.
 SYNOPSIS
-wutconv [OPTION] TextFileName TextFileName1 ...
+wutconv [OPTION] [TextFileName] [TextFileName1] ...
 DESCRIPTION
 Converts the line endings in one or more text files to Windows or Unix format, i.e. LFCR or LF.
 If no text files are specified on the command line, stdin is converted to stdout.
