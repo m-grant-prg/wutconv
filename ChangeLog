@@ -1,3 +1,9 @@
+2014-12-01 v 1.0.3 Mark Grant <m.grant.prg@gmail.com>
+	* Implement conversion of stdin to stdout if no text files are specified
+	on the command line.
+	Implement verbose option. Default is now quiet - no status output.
+	wutconv script now at version 1.0.5.
+
 2014-11-29 v 1.0.2 Mark Grant <m.grant.prg@gmail.com>
 	* Add support for including overall package version in script --version.
 	Switch to use of GNU getopt to allow long options and implement them.
