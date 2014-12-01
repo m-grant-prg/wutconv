@@ -12,9 +12,11 @@
 ## Author: Mark Grant							##
 ##									##
 ## Purpose:								##
-## Converts one or more text file to windows or unix line endings.	##
+## Converts one or more text files to windows or unix line endings, or,	##
+## if no text files are specified on the command line, then stdin is 	##
+## converted to stdout.							##
 ##                                                              	##
-## Syntax:      wutconv [OPTIONS] TextFileName TextFileName1 ...	##
+## Syntax:      wutconv [OPTIONS] [TextFileName] [TextFileName1] ...	##
 ##			[OPTIONS] are:-					##
 ##	-h, --help Displays usage information.				##
 ##	-u, --unix Convert to Unix line endings.			##
@@ -40,6 +42,9 @@
 ## 29/11/2014	MG	1.0.2	Switch to use GNU getopt to enable long	##
 ##				options.				##
 ## 29/11/2014	MG	1.0.3	Add overall package version to -V.	##
+## 01/1202014	MG	1.0.4	Implement conversion of stdin to stdout	##
+##				if no text files are specified on the	##
+##				command line.				##
 ##									##
 ##########################################################################
 
@@ -186,48 +191,55 @@ then
 	script_exit
 fi
 
-# There must be at least 1 filename.
+
+# If no cmd line filenames then use stdin and stdout.
 if [ $# -lt 1 ]
 then
-	script_exit_code=64
-	output "At least 1 filename is required." 1
-	script_exit
-fi
-
-# Process files in sequence. The for line == for arg in $@
-for arg
-do
-	if [ -f $arg ]	# Is it a regular file.
-	then
-		if [ -r $arg -a -w $arg ]	# Is it readable and writable.
+	if [ $unix = TRUE ]
+	then	# Convert to Unix line endings.
+		awk '{if (substr($0,length,1)=="\r")
+			sub(/\r$/, "");
+			print;}'
+	else	# Convert to Windows line endings.
+		awk '{if (substr($0,length,1)!="\r")
+			sub(/$/, "\r");
+			print;}'
+	fi
+else	# Otherwise process cmd line filenames in sequence. The for line == for arg in $@
+	for arg
+	do
+		if [ -f $arg ]	# Is it a regular file.
 		then
-			if [ $unix = TRUE ]
-			then	# Convert to Unix line endings.
-				awk '{if (substr($0,length,1)=="\r")
-					sub(/\r$/, "");
-					print;}' $arg > $arg.tmp \
-					&& mv -f $arg.tmp $arg
-				status=$?
-				output "Converted file "$arg" to Unix format complete with status "$status $status
-				((script_exit_code=$script_exit_code + $status))
-			else	# Convert to Windows line endings.
-				awk '{if (substr($0,length,1)!="\r")
-					sub(/$/, "\r");
-					print;}' $arg > $arg.tmp \
-					&& mv -f $arg.tmp $arg
-				status=$?
-				output "Converted file "$arg" to Windows format complete with status "$status $status
-				((script_exit_code=$script_exit_code + $status))
+			if [ -r $arg -a -w $arg ]	# Is it readable and writable.
+			then
+				if [ $unix = TRUE ]
+				then	# Convert to Unix line endings.
+					awk '{if (substr($0,length,1)=="\r")
+						sub(/\r$/, "");
+						print;}' $arg > $arg.tmp \
+						&& mv -f $arg.tmp $arg
+					status=$?
+					output "Converted file "$arg" to Unix format complete with status "$status $status
+					((script_exit_code=$script_exit_code + $status))
+				else	# Convert to Windows line endings.
+					awk '{if (substr($0,length,1)!="\r")
+						sub(/$/, "\r");
+						print;}' $arg > $arg.tmp \
+						&& mv -f $arg.tmp $arg
+					status=$?
+					output "Converted file "$arg" to Windows format complete with status "$status $status
+					((script_exit_code=$script_exit_code + $status))
+				fi
+			else
+				output "File "$arg" does not have the correct permissions." 1
+				((script_exit_code=$script_exit_code + 1))
 			fi
 		else
-			output "File "$arg" does not have the correct permissions." 1
+			output "File "$arg" does not exist or is not a regular file." 1
 			((script_exit_code=$script_exit_code + 1))
 		fi
-	else
-		output "File "$arg" does not exist or is not a regular file." 1
-		((script_exit_code=$script_exit_code + 1))
-	fi
-done
+	done
+fi
 
 # And exit
 output "Script complete with exit code: "$script_exit_code $script_exit_code
