@@ -60,6 +60,7 @@ packageversion=@pkgversion@		# Version of the complete package
 
 unix=FALSE
 windows=FALSE
+verbosity=""
 
 # See getopt comments at the start of "Main"
 case $osname in
@@ -79,7 +80,10 @@ output()
 {
 	if [ $2 = 0 ]
 	then
-		echo "$outputprefix$1"
+		if [ "$verbosity" = "-v" ]
+		then
+			echo "$outputprefix$1"
+		fi
 	else
 		echo "$outputprefix$1" 1>&2
 	fi
@@ -126,7 +130,7 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 
 # Options u and w are mutually exclusive.
 
-GETOPTTEMP=`"$binlocation"getopt -o huVw --long help,unix,version,windows -n "$0" -- "$@"`
+GETOPTTEMP=`"$binlocation"getopt -o huvVw --long help,unix,verbose,version,windows -n "$0" -- "$@"`
 std_cmd_err_handler $?
 
 eval set -- "$GETOPTTEMP"
@@ -140,6 +144,7 @@ do
 		echo "	[OPTIONS] are:-"
 		echo "	'-h or --help' Displays usage information."
 		echo "	'-u or --unix' Convert to Unix line endings."
+		echo "	'-v or --verbose' verbose output"
 		echo "	'-V or --version' Displays version information."
 		echo "	'-w or --windows' Convert to Windows line endings."
 		shift
@@ -154,6 +159,9 @@ do
 			script_exit
 		fi
 		unix=TRUE
+		shift
+		;;
+	-v|--verbose)	verbosity="-v"
 		shift
 		;;
 	-V|--version)

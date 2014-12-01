@@ -8,6 +8,7 @@ If no text files are specified on the command line, stdin is converted to stdout
 OPTIONS
 -h, --help	Displays usage information.
 -u, --unix	Convert to Unix line endings.
+-v, --verbose	Display verbose output.
 -V, --version	Displays version information.
 -w, --windows	Convert to Windows line endings.
 EXIT STATUS
