@@ -49,6 +49,7 @@
 ##				now quiet - no status output.		##
 ## 01/12/2014	MG	1.0.6	Check that both -u and -w have not been	##
 ##				entered.				##
+## 26/06/2015	MG	1.0.7	Remove BSD support.			##
 ##									##
 ##########################################################################
 
@@ -57,7 +58,7 @@
 ## Init variables ##
 ####################
 script_exit_code=0
-version="1.0.6"				# set version variable
+version="1.0.7"				# set version variable
 outputprefix="wutconv: "
 osname=$(uname -s)			# Get system name for OS differentiation
 packageversion=@pkgversion@		# Version of the complete package
@@ -65,15 +66,6 @@ packageversion=@pkgversion@		# Version of the complete package
 unix=FALSE
 windows=FALSE
 verbosity=""
-
-# See getopt comments at the start of "Main"
-case $osname in
-*BSD)	binlocation=@bindir@"/"
-	;;
-# Linux)	Allow fall through for now as the defaults are linux.
-*)	binlocation=""
-	;;
-esac
 
 ###############
 ## Functions ##
@@ -124,17 +116,10 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 ## Main ##
 ##########
 # Process command line arguments with GNU getopt.
-# (BSD includes, out of the box, a dodgy, feature lacking getopt program
-# installed in /usr/bin. A GNU compatable getopt package is available to install
-# and this gets installed in the bindir, ie /usr/local/bin. This means that the
-# dodgy getopt version is always found first on the PATH. In order to invoke the
-# correct program, $binlocation, (from Makefile bindir), is inserted in the command
-# line below to specify the full path). (Linux GNU getopt can be found on PATH so
-# binlocation ="").
 
 # Options u and w are mutually exclusive.
 
-GETOPTTEMP=`"$binlocation"getopt -o huvVw --long help,unix,verbose,version,windows -n "$0" -- "$@"`
+GETOPTTEMP=`getopt -o huvVw --long help,unix,verbose,version,windows -n "$0" -- "$@"`
 std_cmd_err_handler $?
 
 eval set -- "$GETOPTTEMP"
