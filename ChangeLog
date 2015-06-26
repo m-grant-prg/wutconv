@@ -1,3 +1,7 @@
+2015-06-26 v 1.0.5 Mark Grant <m.grant.prg@gmail.com>
+	* Remove BSD support.
+	wutconv script now at version 1.0.7.
+
 2014-12-11 v 1.0.4 Mark Grant <m.grant.prg@gmail.com>
 	* Add check that both -w and -u have not been entered.
 	wutconv script now at version 1.0.6.
