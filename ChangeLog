@@ -1,3 +1,7 @@
+2015-10-23 v 1.0.6 Mark Grant <m.grant.prg@gmail.com>
+	* Restructure to conform to AutoTools General Template v1.0.6.
+	wutconv script now at version 1.0.8.
+
 2015-06-26 v 1.0.5 Mark Grant <m.grant.prg@gmail.com>
 	* Remove BSD support.
 	wutconv script now at version 1.0.7.
@@ -15,7 +19,7 @@
 2014-11-29 v 1.0.2 Mark Grant <m.grant.prg@gmail.com>
 	* Add support for including overall package version in script --version.
 	Switch to use of GNU getopt to allow long options and implement them.
-	Allow for FreeBSD quirk of 2 different getopt programs on PATH. See 
+	Allow for FreeBSD quirk of 2 different getopt programs on PATH. See
 	comments in script at the start of "Main". Structure OS specific
 	requirements to test for generic *BSD OSs and use Linux as the default.
 	wutconv script now at version 1.0.3.
