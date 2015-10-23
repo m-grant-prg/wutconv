@@ -1,11 +1,11 @@
 #! /usr/bin/env bash
 ##########################################################################
 ##									##
-## Script ID: src/manpages/man1/Makefile.am				##
+## Script ID: source/man/man1/Makefile.am				##
 ## Author: Mark Grant							##
 ##									##
 ## Purpose:								##
-## Automake script file to generate wutconv manual pages from source.	##
+## AutoMake script file to generate wutconv manual pages from source.	##
 ##									##
 ##########################################################################
 
@@ -16,20 +16,25 @@
 ## Date		Author	Version	Description				##
 ##									##
 ## 04/09/2014	MG	1.0.1	First release.				##
+## 23/10/2015	MG	1.0.2	Restructure to conform to AutoTools	##
+##				General Template v1.0.6.		##
 ##									##
 ##########################################################################
 
 
-manpagessrcdir = $(srcdir)
-
-../../../manpages/man1/wutconv.1: Makefile
+wutconv.1: Makefile
 	mkdir -p $(@D)
-	rm -f $@
-	txt2man -t wutconv -s 1 -v "Windows / Unix Text File Converter" \
-		$(manpagessrcdir)/$(@F).txt > $@
+	rm -f $@ $@.tmp
+	$(edit) $(srcdir)/$(@F).txt > $@.tmp
+	mv $@.tmp $@
+	txt2manwrap $(@F) 1 "Windows / Unix Text File Converter" $(srcdir)/$(@F).txt $@
+	rm -f $@.tmp
 
-wutconv.1: $(manpagessrcdir)/wutconv.1.txt
+wutconv.1: $(srcdir)/wutconv.1.txt
 
-man1_MANS = ../../../manpages/man1/wutconv.1
+man_MANS = wutconv.1
 
-EXTRA_DIST = $(manpagessrcdir)/wutconv.1.txt
+EXTRA_DIST = $(srcdir)/wutconv.1.txt
+
+CLEANFILES = *.tmp wutconv.1
+

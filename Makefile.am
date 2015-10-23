@@ -5,7 +5,7 @@
 ## Author: Mark Grant							##
 ##									##
 ## Purpose:								##
-## Automake script file to generate wutconv project from source.	##
+## AutoMake script file to generate wutconv project from source.	##
 ##									##
 ##########################################################################
 
@@ -16,8 +16,11 @@
 ## Date		Author	Version	Description				##
 ##									##
 ## 04/09/2014	MG	1.0.1	First release.				##
+## 23/10/2015	MG	1.0.2	Restructure to conform to AutoTools	##
+##				General Template v1.0.6.		##
 ##									##
 ##########################################################################
 
 
-SUBDIRS = src/scripts src/manpages/man1
+SUBDIRS = source/man/man1 source/progs/bash
+

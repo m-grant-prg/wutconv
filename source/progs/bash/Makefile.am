@@ -1,11 +1,11 @@
 #! /usr/bin/env bash
 ##########################################################################
 ##									##
-## Script ID: src/scripts/Makefile.am					##
+## Script ID: source/progs/bash/Makefile.am				##
 ## Author: Mark Grant							##
 ##									##
 ## Purpose:								##
-## Automake script file to generate wutconv script from source.		##
+## AutoMake script file to generate wutconv script from source.		##
 ##									##
 ##########################################################################
 
@@ -18,31 +18,24 @@
 ## 04/09/2014	MG	1.0.1	First release.				##
 ## 29/11/2014	MG	1.0.2	Add script substitution variable for	##
 ##				overall package version.		##
+## 23/10/2015	MG	1.0.3	Restructure to conform to AutoTools	##
+##				General Template v1.0.6.		##
 ##									##
 ##########################################################################
 
 
-edit = sed \
-	-e 's|@bindir[@]|$(bindir)|g' \
-	-e 's|@pkgdatadir[@]|$(pkgdatadir)|g' \
-	-e 's|@sysconfdir[@]|$(sysconfdir)|g' \
-	-e 's|@prefix[@]|$(prefix)|g' \
-	-e 's|@pkgversion[@]|$(pkgversion)|g'
-
-scriptssrcdir = $(srcdir)
-
-../../scripts/wutconv: Makefile
+wutconv: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
-	test -f ./$@.in || scriptssrcdir=$(scriptssrcdir)/; \
-	$(edit) $${scriptssrcdir}$(@F).in >$@.tmp
-
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).in > $@.tmp
 	mv $@.tmp $@
-
 	chmod a+x $@
+wutconv: $(srcdir)/wutconv.in
 
-wutconv: $(scriptssrcdir)/wutconv.in
+bin_SCRIPTS = wutconv
 
-bin_SCRIPTS = ../../scripts/wutconv
+EXTRA_DIST = $(srcdir)/wutconv.in
 
-EXTRA_DIST = $(scriptssrcdir)/wutconv.in
+CLEANFILES = *.tmp wutconv
+
