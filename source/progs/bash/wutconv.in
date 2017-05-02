@@ -1,63 +1,63 @@
 #! /usr/bin/env bash
-##########################################################################
-##									##
-##	wutconv is automatically generated,				##
-##		please do not modify!					##
-##									##
-##########################################################################
+#########################################################################
+#									#
+#	wutconv is automatically generated,				#
+#		please do not modify!					#
+#									#
+#########################################################################
 
-##########################################################################
-##									##
-## Script ID: wutconv							##
-## Author: Mark Grant							##
-##									##
-## Purpose:								##
-## Converts one or more text files to windows or unix line endings, or,	##
-## if no text files are specified on the command line, then stdin is 	##
-## converted to stdout.							##
-##                                                              	##
-## Syntax:      wutconv [OPTIONS] [TextFileName] [TextFileName1] ...	##
-##			[OPTIONS] are:-					##
-##	-h, --help Displays usage information.				##
-##	-u, --unix Convert to Unix line endings.			##
-##	-V, --version Displays version information.			##
-##	-w, --windows Convert to Windows line endings.			##
-##									##
-## Exit Codes:	0 & 64 - 113 as per C/C++ standard			##
-##		0 - success						##
-##		64 - Invalid arguments					##
-##		66 - File access error					##
-##		67 - trap received					##
-##		77 - Permissions error					##
-##									##
-##########################################################################
+#########################################################################
+#									#
+# Script ID: wutconv							#
+# Author: Mark Grant							#
+#									#
+# Purpose:								#
+# Converts one or more text files to windows or unix line endings, or,	#
+# if no text files are specified on the command line, then stdin is 	#
+# converted to stdout.							#
+#                                                              		#
+# Syntax:      wutconv [OPTIONS] [TextFileName] [TextFileName1] ...	#
+#			[OPTIONS] are:-					#
+#	-h, --help Displays usage information.				#
+#	-u, --unix Convert to Unix line endings.			#
+#	-V, --version Displays version information.			#
+#	-w, --windows Convert to Windows line endings.			#
+#									#
+# Exit Codes:	0 & 64 - 113 as per C/C++ standard			#
+#		0 - success						#
+#		64 - Invalid arguments					#
+#		66 - File access error					#
+#		67 - trap received					#
+#		77 - Permissions error					#
+#									#
+#########################################################################
 
-##########################################################################
-##									##
-## Changelog								##
-##									##
-## Date		Author	Version	Description				##
-##									##
-## 04/09/2014	MG	1.0.1	First release.				##
-## 29/11/2014	MG	1.0.2	Switch to use GNU getopt to enable long	##
-##				options.				##
-## 29/11/2014	MG	1.0.3	Add overall package version to -V.	##
-## 01/12/2014	MG	1.0.4	Implement conversion of stdin to stdout	##
-##				if no text files are specified on the	##
-##				command line.				##
-## 01/12/2014	MG	1.0.5	Implement verbose option. Default is	##
-##				now quiet - no status output.		##
-## 01/12/2014	MG	1.0.6	Check that both -u and -w have not been	##
-##				entered.				##
-## 26/06/2015	MG	1.0.7	Remove BSD support.			##
-## 23/10/2015	MG	1.0.8	Remove redundant osname look-up.	##
-##									##
-##########################################################################
+#########################################################################
+#									#
+# Changelog								#
+#									#
+# Date		Author	Version	Description				#
+#									#
+# 04/09/2014	MG	1.0.1	First release.				#
+# 29/11/2014	MG	1.0.2	Switch to use GNU getopt to enable long	#
+#				options.				#
+# 29/11/2014	MG	1.0.3	Add overall package version to -V.	#
+# 01/12/2014	MG	1.0.4	Implement conversion of stdin to stdout	#
+#				if no text files are specified on the	#
+#				command line.				#
+# 01/12/2014	MG	1.0.5	Implement verbose option. Default is	#
+#				now quiet - no status output.		#
+# 01/12/2014	MG	1.0.6	Check that both -u and -w have not been	#
+#				entered.				#
+# 26/06/2015	MG	1.0.7	Remove BSD support.			#
+# 23/10/2015	MG	1.0.8	Remove redundant osname look-up.	#
+#									#
+#########################################################################
 
 
-####################
-## Init variables ##
-####################
+##################
+# Init variables #
+##################
 script_exit_code=0
 version="1.0.8"				# set version variable
 outputprefix="wutconv: "
@@ -67,9 +67,9 @@ unix=FALSE
 windows=FALSE
 verbosity=""
 
-###############
-## Functions ##
-###############
+#############
+# Functions #
+#############
 
 # Output $1 to stdout or stderr depending on $2
 output()
@@ -112,9 +112,9 @@ script_exit
 # Setup trap
 trap trap_exit SIGHUP SIGINT SIGTERM
 
-##########
-## Main ##
-##########
+########
+# Main #
+########
 # Process command line arguments with GNU getopt.
 
 # Options u and w are mutually exclusive.
