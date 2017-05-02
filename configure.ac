@@ -31,10 +31,12 @@
 # 26/06/2015	MG	1.0.5	Remove BSD support.			#
 # 23/10/2015	MG	1.0.6	Restructure to conform to AutoTools	#
 #				General Template v1.0.6.		#
+# 02/05/2017	MG	1.0.7	Make AC_INIT and pkgversion AC_SUBST	#
+#				multi-line.				#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.6 $])
+AC_REVISION([$Revision: 1.0.7 $])
 
 AC_PREREQ([2.65])
 
@@ -50,11 +52,16 @@ AC_PREREQ([2.65])
 #
 ########################
 
-AC_INIT([Windows / Unix File Converter], m4_esyscmd([git describe --always 1>/dev/null 2>/dev/null && git describe --always | tr -d '\n' || echo 'Pre-Release' | tr -d '\n']), [m.grant.prg@gmail.com], [wutconv])
+AC_INIT([Windows / Unix File Converter], m4_esyscmd([ \
+	git describe --always 1>/dev/null 2>/dev/null \
+	&& git describe --always | tr -d '\n' \
+	|| echo 'Pre-Release' | tr -d '\n']),
+	[m.grant.prg@gmail.com], [wutconv])
 
-AC_SUBST([pkgversion], [m4_esyscmd([git describe --always 1>/dev/null 2>/dev/null \
-		&& git describe --always | tr -d '\n' \
-		|| echo 'Pre-Release' | tr -d '\n'])])
+AC_SUBST([pkgversion], [m4_esyscmd([ \
+	git describe --always 1>/dev/null 2>/dev/null \
+	&& git describe --always | tr -d '\n' \
+	|| echo 'Pre-Release' | tr -d '\n'])])
 
 
 ########################
