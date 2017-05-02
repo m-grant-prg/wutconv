@@ -1,3 +1,6 @@
+2017-05-02 v 1.0.7 Mark Grant <m.grant.prg@gmail.com>
+	*  Apply standards from atbre template v1.0.0
+
 2015-10-23 v 1.0.6 Mark Grant <m.grant.prg@gmail.com>
 	* Restructure to conform to AutoTools General Template v1.0.6.
 	wutconv script now at version 1.0.8.
