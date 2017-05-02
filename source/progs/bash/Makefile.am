@@ -20,6 +20,7 @@
 #				overall package version.		#
 # 23/10/2015	MG	1.0.3	Restructure to conform to AutoTools	#
 #				General Template v1.0.6.		#
+# 02/05/2017	MG	1.0.4	Rename source file extension .sh.in	#
 #									#
 #########################################################################
 
@@ -27,14 +28,14 @@
 wutconv: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
-	test -f ./$@.in || srcdir=$(srcdir)/; \
-	$(edit) $${srcdir}$(@F).in > $@.tmp
+	test -f ./$@.sh.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).sh.in > $@.tmp
 	mv $@.tmp $@
 	chmod a+x $@
-wutconv: $(srcdir)/wutconv.in
+wutconv: $(srcdir)/wutconv.sh.in
 
 bin_SCRIPTS = wutconv
 
-EXTRA_DIST = $(srcdir)/wutconv.in
+EXTRA_DIST = $(srcdir)/wutconv.sh.in
 
 CLEANFILES = *.tmp wutconv
