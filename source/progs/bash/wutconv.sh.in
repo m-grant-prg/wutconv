@@ -51,6 +51,7 @@
 #				entered.				#
 # 26/06/2015	MG	1.0.7	Remove BSD support.			#
 # 23/10/2015	MG	1.0.8	Remove redundant osname look-up.	#
+# 01/07/2017	MG	1.0.9	Enforce 80 column rule.			#
 #									#
 #########################################################################
 
@@ -59,7 +60,7 @@
 # Init variables #
 ##################
 script_exit_code=0
-version="1.0.8"				# set version variable
+version="1.0.9"				# set version variable
 outputprefix="wutconv: "
 packageversion=@pkgversion@		# Version of the complete package
 
@@ -119,7 +120,8 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 
 # Options u and w are mutually exclusive.
 
-GETOPTTEMP=`getopt -o huvVw --long help,unix,verbose,version,windows -n "$0" -- "$@"`
+GETOPTTEMP=`getopt -o huvVw --long help,unix,verbose,version,windows \
+		-n "$0" -- "$@"`
 std_cmd_err_handler $?
 
 eval set -- "$GETOPTTEMP"
@@ -209,41 +211,54 @@ then
 			sub(/$/, "\r");
 			print;}'
 	fi
-else	# Otherwise process cmd line filenames in sequence. The for line == for arg in $@
-	for arg
-	do
-		if [ -f $arg ]	# Is it a regular file.
+	# And exit
+	script_exit_code=0
+	output "Script complete with exit code: "$script_exit_code \
+		$script_exit_code
+	script_exit
+fi
+
+# Otherwise process cmd line filenames in sequence.
+# The for line == for arg in $@
+for arg
+do
+	if [ -f $arg ]	# Is it a regular file.
+	then
+		if [ -r $arg -a -w $arg ]	# Is it readable and writable.
 		then
-			if [ -r $arg -a -w $arg ]	# Is it readable and writable.
-			then
-				if [ $unix = TRUE ]
-				then	# Convert to Unix line endings.
-					awk '{if (substr($0,length,1)=="\r")
-						sub(/\r$/, "");
-						print;}' $arg > $arg.tmp \
-						&& mv -f $arg.tmp $arg
-					status=$?
-					output "Converted file "$arg" to Unix format complete with status "$status $status
-					((script_exit_code=$script_exit_code + $status))
-				else	# Convert to Windows line endings.
-					awk '{if (substr($0,length,1)!="\r")
-						sub(/$/, "\r");
-						print;}' $arg > $arg.tmp \
-						&& mv -f $arg.tmp $arg
-					status=$?
-					output "Converted file "$arg" to Windows format complete with status "$status $status
-					((script_exit_code=$script_exit_code + $status))
-				fi
-			else
-				output "File "$arg" does not have the correct permissions." 1
-				((script_exit_code=$script_exit_code + 1))
+			if [ $unix = TRUE ]
+			then	# Convert to Unix line endings.
+				awk '{if (substr($0,length,1)=="\r")
+					sub(/\r$/, "");
+					print;}' $arg > $arg.tmp \
+					&& mv -f $arg.tmp $arg
+				status=$?
+				msg="Converted file "$arg" to Unix format "
+				msg+="complete with status "$status
+				output "$msg" $status
+				((script_exit_code=$script_exit_code + $status))
+			else	# Convert to Windows line endings.
+				awk '{if (substr($0,length,1)!="\r")
+					sub(/$/, "\r");
+					print;}' $arg > $arg.tmp \
+					&& mv -f $arg.tmp $arg
+				status=$?
+				msg="Converted file "$arg" to Windows format "
+				msg+="complete with status "$status
+				output "$msg" $status
+				((script_exit_code=$script_exit_code + $status))
 			fi
 		else
-			output "File "$arg" does not exist or is not a regular file." 1
+			msg="File "$arg" does not have the correct permissions."
+			output "$msg" 1
 			((script_exit_code=$script_exit_code + 1))
 		fi
-	done
-fi
+	else
+		output "File "$arg" does not exist or is not a regular file." 1
+		((script_exit_code=$script_exit_code + 1))
+	fi
+done
+
 
 # And exit
 output "Script complete with exit code: "$script_exit_code $script_exit_code
