@@ -18,19 +18,7 @@ EXIT STATUS
 if OK,
 
 1
-if minor problems,
-
-64
-error in command line arguments,
-
-66
-file access error,
-
-67
-trap received,
-
-77
-permissions error.
+on error.
 AUTHOR
 Written by Mark Grant.
 REPORTING BUGS
