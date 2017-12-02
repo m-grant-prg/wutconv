@@ -9,7 +9,10 @@
 #########################################################################
 #									#
 # Script ID: wutconv							#
-# Author: Mark Grant							#
+# Author: Copyright (C) 2014-2017  Mark Grant				#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0					#
 #									#
 # Purpose:								#
 # Converts one or more text files to windows or unix line endings, or,	#
@@ -52,6 +55,7 @@
 # 26/06/2015	MG	1.0.7	Remove BSD support.			#
 # 23/10/2015	MG	1.0.8	Remove redundant osname look-up.	#
 # 01/07/2017	MG	1.0.9	Enforce 80 column rule.			#
+# 02/12/2017	MG	1.0.10	Add SPDX license tags to source files.	#
 #									#
 #########################################################################
 
@@ -60,7 +64,7 @@
 # Init variables #
 ##################
 script_exit_code=0
-version="1.0.9"				# set version variable
+version="1.0.10"			# set version variable
 outputprefix="wutconv: "
 packageversion=@pkgversion@		# Version of the complete package
 

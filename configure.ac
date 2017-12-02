@@ -1,7 +1,10 @@
 #########################################################################
 #									#
 # Script ID: ./configure.ac						#
-# Author: Mark Grant							#
+# Author: Copyright (C) 2014-2017  Mark Grant				#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0					#
 #									#
 # Purpose:								#
 # AutoConf script file to configure wutconv project.			#
@@ -36,10 +39,11 @@
 #				Fully populate sed substitution		#
 #				variable.				#
 #				Some cosmetic standardisation.		#
+# 02/12/2017	MG	1.0.8	Add SPDX license tags to source files.	#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.7 $])
+AC_REVISION([$Revision: 1.0.8 $])
 
 AC_PREREQ([2.65])
 
