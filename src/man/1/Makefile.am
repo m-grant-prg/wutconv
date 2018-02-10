@@ -1,8 +1,8 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-# Script ID: source/man/man1/Makefile.am				#
-# Author: Copyright (C) 2014-2017  Mark Grant				#
+# Script ID: src/man/1/Makefile.am					#
+# Author: Copyright (C) 2014-2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -28,6 +28,8 @@
 #				(foo.) or if there is no suffix (foo)	#
 #				then error out.				#
 #				Add SPDX license tags to source files.	#
+# 10/02/2018	MG	1.0.5	Change file's header for new directory	#
+#				names.					#
 #									#
 #########################################################################
 
