@@ -42,12 +42,13 @@
 # 02/12/2017	MG	1.0.8	Add SPDX license tags to source files.	#
 # 10/02/2018	MG	1.0.9	Shorten directory names to reduce	#
 #				overall path length.			#
+#				Update minimum AutoTools version.	#
 #									#
 #########################################################################
 
 AC_REVISION([$Revision: 1.0.9 $])
 
-AC_PREREQ([2.65])
+AC_PREREQ([2.69])
 
 
 ########################
