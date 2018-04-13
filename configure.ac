@@ -71,7 +71,7 @@ AC_PREREQ([2.69])
 #
 ########################
 
-AC_INIT(Windows / Unix File Converter, v1.0.11+rc1,
+AC_INIT(Windows / Unix File Converter, v1.0.12,
 	m.grant.prg@gmail.com, wutconv)
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
