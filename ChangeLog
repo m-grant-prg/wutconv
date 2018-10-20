@@ -1,3 +1,9 @@
+2018-10-20 v 1.0.14 Mark Grant <m.grant.prg@gmail.com>
+	*  Add markdown symlink to README.
+	Beautify README for GitHub markdown presentation.
+	Modify README to refer to new wiki.
+	wutconv script still at version 1.0.10
+
 2018-08-28 v 1.0.13 Mark Grant <m.grant.prg@gmail.com>
 	*  There have been enough minor project infrastructure changes to
 	warrant a new release. No functionality changes.
