@@ -1,3 +1,7 @@
+2018-11-01 v 1.0.15 Mark Grant <m.grant.prg@gmail.com>
+	*  srctarball to use -src- in filename
+	wutconv script still at version 1.0.10
+
 2018-10-20 v 1.0.14 Mark Grant <m.grant.prg@gmail.com>
 	*  Add markdown symlink to README.
 	Beautify README for GitHub markdown presentation.
