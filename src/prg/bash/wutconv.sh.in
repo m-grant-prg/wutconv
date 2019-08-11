@@ -127,16 +127,22 @@ script_exit()
 	exit $script_exit_code
 }
 
-# Standard trap exit function
+# Standard trap exit function.
+# No parameters.
+# No return value.
 trap_exit()
 {
-script_exit_code=1
-output "Script terminating due to trap received. Code: "$script_exit_code 1
-script_exit
+	script_exit_code=$?
+	local msg
+
+	msg="Script terminating with exit code $exit_code due to trap received."
+	output "$msg" 1
+	script_exit
 }
 
-# Setup trap
-trap trap_exit SIGHUP SIGINT SIGTERM
+# Setup trap.
+trap trap_exit SIGHUP SIGINT SIGQUIT SIGTERM
+
 
 ########
 # Main #
