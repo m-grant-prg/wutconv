@@ -57,6 +57,7 @@
 # 11/08/2019	MG	1.0.11	Do not hardcode outputprefix.		#
 #				Adopt C style for loops and ifs.	#
 #				Use true booleans.			#
+#				Refactor into functions.		#
 #									#
 #########################################################################
 
@@ -73,9 +74,26 @@ unix=false
 windows=false
 verbosity=""
 
+
 #############
 # Functions #
 #############
+
+# -h --help output.
+# No parameters
+# No return value
+usage ()
+{
+cat << EOF
+Usage is $0 [OPTIONS] TextFileName TextFileName1 ...
+	[OPTIONS] are:-"
+	-h or --help Displays usage information
+	-u or --unix Convert to Unix line endings
+	-v or --verbose verbose output
+	-V or --version Displays version information
+	-w or --windows Convert to Windows line endings
+EOF
+}
 
 # Output $1 to stdout or stderr depending on $2
 output()
@@ -132,13 +150,7 @@ std_cmd_err_handler $?
 while true; do
 	case "$1" in
 	-h|--help)
-		echo "Usage is $0 [OPTIONS]" TextFileName TextFileName1 ...
-		echo "	[OPTIONS] are:-"
-		echo "	'-h or --help' Displays usage information."
-		echo "	'-u or --unix' Convert to Unix line endings."
-		echo "	'-v or --verbose' verbose output"
-		echo "	'-V or --version' Displays version information."
-		echo "	'-w or --windows' Convert to Windows line endings."
+		usage
 		shift
 		script_exit_code=0
 		script_exit
