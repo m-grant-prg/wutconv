@@ -55,6 +55,7 @@
 #				Adopt normal exit code policy; 0 on	#
 #				success, 1 on failure.			#
 # 11/08/2019	MG	1.0.11	Do not hardcode outputprefix.		#
+#				Adopt C style for loops and ifs.	#
 #									#
 #########################################################################
 
@@ -78,10 +79,8 @@ verbosity=""
 # Output $1 to stdout or stderr depending on $2
 output()
 {
-	if [ $2 = 0 ]
-	then
-		if [ "$verbosity" = "-v" ]
-		then
+	if [ $2 = 0 ]; then
+		if [ "$verbosity" = "-v" ]; then
 			echo "$outputprefix$1"
 		fi
 	else
@@ -92,8 +91,7 @@ output()
 # Standard function to test command error ($1 is $?) and exit if non-zero
 std_cmd_err_handler()
 {
-	if [ $1 != 0 ]
-	then
+	if [ $1 != 0 ]; then
 		script_exit_code=$1
 		script_exit
 	fi
@@ -130,8 +128,7 @@ std_cmd_err_handler $?
 eval set -- "$GETOPTTEMP"
 std_cmd_err_handler $?
 
-while true
-do
+while true; do
 	case "$1" in
 	-h|--help)
 		echo "Usage is $0 [OPTIONS]" TextFileName TextFileName1 ...
@@ -146,8 +143,7 @@ do
 		script_exit
 		;;
 	-u|--unix)
-		if [ $windows = TRUE ]
-		then
+		if [ $windows = TRUE ]; then
 			script_exit_code=1
 			output "Cannot specify options u AND w." 1
 			script_exit
@@ -166,8 +162,7 @@ do
 		script_exit
 		;;
 	-w|--windows)
-		if [ $unix = TRUE ]
-		then
+		if [ $unix = TRUE ]; then
 			script_exit_code=1
 			output "Cannot specify options w AND u." 1
 			script_exit
@@ -186,26 +181,22 @@ do
 done
 
 # Either u or w flag must be set.
-if [ $windows = FALSE -a $unix = FALSE ]
-then
+if [ $windows = FALSE -a $unix = FALSE ]; then
 	script_exit_code=1
 	output "Either -u or -w must be set." 1
 	script_exit
 fi
 
 # u and w flag cannot both be set.
-if [ $windows = TRUE -a $unix = TRUE ]
-then
+if [ $windows = TRUE -a $unix = TRUE ]; then
 	script_exit_code=1
 	output "-u and -w cannot both be set." 1
 	script_exit
 fi
 
 # If no cmd line filenames then use stdin and stdout.
-if [ $# -lt 1 ]
-then
-	if [ $unix = TRUE ]
-	then	# Convert to Unix line endings.
+if [ $# -lt 1 ]; then
+	if [ $unix = TRUE ]; then	# Convert to Unix line endings.
 		awk '{if (substr($0,length,1)=="\r")
 			sub(/\r$/, "");
 			print;}'
@@ -223,14 +214,10 @@ fi
 
 # Otherwise process cmd line filenames in sequence.
 # The for line == for arg in $@
-for arg
-do
-	if [ -f $arg ]	# Is it a regular file.
-	then
-		if [ -r $arg -a -w $arg ]	# Is it readable and writable.
-		then
-			if [ $unix = TRUE ]
-			then	# Convert to Unix line endings.
+for arg; do
+	if [ -f $arg ]; then	# Is it a regular file.
+		if [ -r $arg -a -w $arg ]; then	# Is it readable and writable.
+			if [ $unix = TRUE ]; then	# Convert to Unix
 				awk '{if (substr($0,length,1)=="\r")
 					sub(/\r$/, "");
 					print;}' $arg > $arg.tmp \
