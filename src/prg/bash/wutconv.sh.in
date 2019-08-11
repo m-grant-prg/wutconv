@@ -58,6 +58,7 @@
 #				Adopt C style for loops and ifs.	#
 #				Use true booleans.			#
 #				Refactor into functions.		#
+#				Improve legibility of main for loop.	#
 #									#
 #########################################################################
 
@@ -228,47 +229,44 @@ if [ $# -lt 1 ]; then
 	script_exit 0
 fi
 
-script_exit_code=0
-
 # Otherwise process cmd line filenames in sequence.
 # The for line == for arg in $@
 for arg; do
-	if [ -f $arg ]; then	# Is it a regular file.
-		if [ -r $arg -a -w $arg ]; then	# Is it readable and writable.
-			if $unix ; then		# Convert to Unix
-				awk '{if (substr($0,length,1)=="\r")
-					sub(/\r$/, "");
-					print;}' $arg > $arg.tmp \
-					&& mv -f $arg.tmp $arg
-				status=$?
-				msg="Converted file "$arg" to Unix format "
-				msg+="complete with status "$status
-				output "$msg" $status
-				((script_exit_code=$script_exit_code + $status))
-			else	# Convert to Windows line endings.
-				awk '{if (substr($0,length,1)!="\r")
-					sub(/$/, "\r");
-					print;}' $arg > $arg.tmp \
-					&& mv -f $arg.tmp $arg
-				status=$?
-				msg="Converted file "$arg" to Windows format "
-				msg+="complete with status "$status
-				output "$msg" $status
-				((script_exit_code=$script_exit_code + $status))
-			fi
-		else
-			msg="File "$arg" does not have the correct permissions."
-			output "$msg" 1
-			((script_exit_code=$script_exit_code + 1))
-		fi
-	else
+	# Check file exists, is a regular file  and is readable and writeable
+	if [ ! -f $arg ]; then
 		output "File "$arg" does not exist or is not a regular file." 1
-		((script_exit_code=$script_exit_code + 1))
+		script_exit 1
+	fi
+	if [ ! -r $arg -o ! -w $arg ]; then
+		output "File "$arg" does not have the correct permissions." 1
+		script_exit 1
+	fi
+
+	if $unix ; then		# Convert to Unix
+		awk '{if (substr($0,length,1)=="\r")
+			sub(/\r$/, "");
+			print;}' $arg > $arg.tmp \
+			&& mv -f $arg.tmp $arg
+		status=$?
+		msg="Converted file "$arg" to Unix format "
+		msg+="complete with status "$status
+		output "$msg" $status
+		std_cmd_err_handler $status
+	else	# Convert to Windows line endings.
+		awk '{if (substr($0,length,1)!="\r")
+			sub(/$/, "\r");
+			print;}' $arg > $arg.tmp \
+			&& mv -f $arg.tmp $arg
+		status=$?
+		msg="Converted file "$arg" to Windows format "
+		msg+="complete with status "$status
+		output "$msg" $status
+		std_cmd_err_handler $status
 	fi
 done
 
 
 # And exit
-output "Script complete with exit code: "$script_exit_code $script_exit_code
-script_exit $script_exit_code
+output "Script complete with exit code: 0" 0
+script_exit 0
 
