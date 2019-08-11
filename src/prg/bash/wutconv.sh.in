@@ -65,7 +65,6 @@
 ##################
 # Init variables #
 ##################
-script_exit_code=0
 version=1.0.11				# set version variable
 outputprefix="$(basename $0): "
 packageversion=@pkgversion@		# Version of the complete package
@@ -121,10 +120,12 @@ std_cmd_err_handler()
 	fi
 }
 
-# Standard function to tidy up and return exit code
+# Standard function to tidy up and return exit code.
+# Parameters - 	$1 is the exit code.
+# No return value.
 script_exit()
 {
-	exit $script_exit_code
+	exit $1
 }
 
 # Standard trap exit function.
@@ -132,12 +133,12 @@ script_exit()
 # No return value.
 trap_exit()
 {
-	script_exit_code=$?
+	local -i exit_code=$?
 	local msg
 
 	msg="Script terminating with exit code $exit_code due to trap received."
-	output "$msg" 1
-	script_exit
+	output "$msg" 1 0
+	script_exit $exit_code
 }
 
 # Setup trap.
@@ -163,14 +164,12 @@ while true; do
 	-h|--help)
 		usage
 		shift
-		script_exit_code=0
-		script_exit
+		script_exit 0
 		;;
 	-u|--unix)
 		if $windows ; then
-			script_exit_code=1
 			output "Cannot specify options u AND w." 1
-			script_exit
+			script_exit 1
 		fi
 		unix=true
 		shift
@@ -182,14 +181,12 @@ while true; do
 		echo "$0 Script version "$version
 		echo "$0 Package version "$packageversion
 		shift
-		script_exit_code=0
-		script_exit
+		script_exit 0
 		;;
 	-w|--windows)
 		if $unix ; then
-			script_exit_code=1
 			output "Cannot specify options w AND u." 1
-			script_exit
+			script_exit 1
 		fi
 		windows=true
 		shift
@@ -197,25 +194,22 @@ while true; do
 	--)	shift
 		break
 		;;
-	*)	script_exit_code=1
-		output "Internal error." 1
-		script_exit
+	*)	output "Internal error." 1
+		script_exit 1
 		;;
 	esac
 done
 
 # Either u or w flag must be set.
 if ! $windows && ! $unix ; then
-	script_exit_code=1
 	output "Either -u or -w must be set." 1
-	script_exit
+	script_exit 1
 fi
 
 # u and w flag cannot both be set.
 if $windows && $unix ; then
-	script_exit_code=1
 	output "-u and -w cannot both be set." 1
-	script_exit
+	script_exit 1
 fi
 
 # If no cmd line filenames then use stdin and stdout.
@@ -230,11 +224,11 @@ if [ $# -lt 1 ]; then
 			print;}'
 	fi
 	# And exit
-	script_exit_code=0
-	output "Script complete with exit code: "$script_exit_code \
-		$script_exit_code
-	script_exit
+	output "Script complete with exit code: 0" 0
+	script_exit 0
 fi
+
+script_exit_code=0
 
 # Otherwise process cmd line filenames in sequence.
 # The for line == for arg in $@
@@ -276,4 +270,5 @@ done
 
 # And exit
 output "Script complete with exit code: "$script_exit_code $script_exit_code
-script_exit
+script_exit $script_exit_code
+
