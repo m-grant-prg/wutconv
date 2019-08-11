@@ -145,76 +145,87 @@ trap_exit()
 # Setup trap.
 trap trap_exit SIGHUP SIGINT SIGQUIT SIGTERM
 
+# Process command line arguments with GNU getopt.
+# Parameters -	$1 is the command line.
+# No return value.
+proc_CL()
+{
+	local GETOPTTEMP
+	local tmpGETOPTTEMP
+
+	tmpGETOPTTEMP="getopt -o huvVw --long help,unix,verbose,version,windows"
+	GETOPTTEMP=$($tmpGETOPTTEMP -n "$0" -- "$@")
+	std_cmd_err_handler $?
+
+	eval set -- "$GETOPTTEMP"
+	std_cmd_err_handler $?
+
+	while true; do
+		case "$1" in
+		-h|--help)
+			usage
+			shift
+			script_exit 0
+			;;
+		-u|--unix)
+			if $windows ; then
+				output "Cannot specify options u AND w." 1
+				script_exit 1
+			fi
+			unix=true
+			shift
+			;;
+		-v|--verbose)	verbosity="-v"
+			shift
+			;;
+		-V|--version)
+			echo "$0 Script version "$version
+			echo "$0 Package version "$packageversion
+			shift
+			script_exit 0
+			;;
+		-w|--windows)
+			if $unix ; then
+				output "Cannot specify options w AND u." 1
+				script_exit 1
+			fi
+			windows=true
+			shift
+			;;
+		--)	shift
+			break
+			;;
+		*)	output "Internal error." 1
+			script_exit 1
+			;;
+		esac
+	done
+
+	# Either u or w flag must be set.
+	if ! $windows && ! $unix ; then
+		output "Either -u or -w must be set." 1
+		script_exit 1
+	fi
+
+	# u and w flag cannot both be set.
+	if $windows && $unix ; then
+		output "-u and -w cannot both be set." 1
+		script_exit 1
+	fi
+
+	# Save any filenames
+	non_opt_args="$@"
+}
+
 
 ########
 # Main #
 ########
-# Process command line arguments with GNU getopt.
 
-# Options u and w are mutually exclusive.
-
-GETOPTTEMP=`getopt -o huvVw --long help,unix,verbose,version,windows \
-		-n "$0" -- "$@"`
-std_cmd_err_handler $?
-
-eval set -- "$GETOPTTEMP"
-std_cmd_err_handler $?
-
-while true; do
-	case "$1" in
-	-h|--help)
-		usage
-		shift
-		script_exit 0
-		;;
-	-u|--unix)
-		if $windows ; then
-			output "Cannot specify options u AND w." 1
-			script_exit 1
-		fi
-		unix=true
-		shift
-		;;
-	-v|--verbose)	verbosity="-v"
-		shift
-		;;
-	-V|--version)
-		echo "$0 Script version "$version
-		echo "$0 Package version "$packageversion
-		shift
-		script_exit 0
-		;;
-	-w|--windows)
-		if $unix ; then
-			output "Cannot specify options w AND u." 1
-			script_exit 1
-		fi
-		windows=true
-		shift
-		;;
-	--)	shift
-		break
-		;;
-	*)	output "Internal error." 1
-		script_exit 1
-		;;
-	esac
-done
-
-# Either u or w flag must be set.
-if ! $windows && ! $unix ; then
-	output "Either -u or -w must be set." 1
-	script_exit 1
-fi
-
-# u and w flag cannot both be set.
-if $windows && $unix ; then
-	output "-u and -w cannot both be set." 1
-	script_exit 1
-fi
+proc_CL "$@"
 
 # If no cmd line filenames then use stdin and stdout.
-if [ $# -lt 1 ]; then
+if [[ ! $non_opt_args ]]; then
 	if $unix ; then	# Convert to Unix line endings.
 		awk '{if (substr($0,length,1)=="\r")
 			sub(/\r$/, "");
@@ -230,8 +241,7 @@ if [ $# -lt 1 ]; then
 fi
 
 # Otherwise process cmd line filenames in sequence.
-# The for line == for arg in $@
-for arg; do
+for arg in $non_opt_args ; do
 	# Check file exists, is a regular file  and is readable and writeable
 	if [ ! -f $arg ]; then
 		output "File "$arg" does not exist or is not a regular file." 1
@@ -264,7 +274,6 @@ for arg; do
 		std_cmd_err_handler $status
 	fi
 done
-
 
 # And exit
 output "Script complete with exit code: 0" 0
