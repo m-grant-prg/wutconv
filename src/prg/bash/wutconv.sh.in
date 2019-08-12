@@ -89,6 +89,7 @@
 #				via configure.				#
 #				Use awk location provided by configure.	#
 #				Introduce more meaningful exit codes.	#
+#				Tidy up local and global variables.	#
 #									#
 #########################################################################
 
@@ -96,9 +97,9 @@
 ##################
 # Init variables #
 ##################
-version=1.0.11				# set version variable
-outputprefix="$(basename $0): "
-packageversion=@pkgversion@		# Version of the complete package
+readonly version=1.0.11				# Script version
+readonly outputprefix="$(basename $0): "
+readonly packageversion=@pkgversion@		# Package version
 
 unix=false
 windows=false
