@@ -37,11 +37,20 @@
 #				Add install of standard GNU files like	#
 #				AUTHORS, etc.				#
 #				Remove shebang.				#
+#				To enable make distcheck to work, any	#
+#				hard-coded paths requiring permissions	#
+#				such as /etc or fixed locations such as	#
+#				/usr/share/java must be accommodated,	#
+#				so set the configure flags to be used	#
+#				by make distcheck.			#
 #									#
 #########################################################################
 
 
 ACLOCAL_AMFLAGS = -I m4
+
+
+AM_DISTCHECK_CONFIGURE_FLAGS =
 
 
 SUBDIRS = src/man/1 src/prg/bash
