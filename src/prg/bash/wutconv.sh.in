@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#! @bashlocation@
 #########################################################################
 #									#
 #	wutconv is automatically generated,				#
@@ -61,6 +61,8 @@
 #				Improve legibility of main for loop.	#
 #				Utilise more powerful [[ ... ]]		#
 #				Use printf AOT echo.			#
+#				Replace #! env bash with absolute path	#
+#				via configure.				#
 #									#
 #########################################################################
 
