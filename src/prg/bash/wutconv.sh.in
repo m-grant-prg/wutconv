@@ -19,15 +19,18 @@
 # if no text files are specified on the command line, then stdin is 	#
 # converted to stdout.							#
 #                                                              		#
-# Syntax:      wutconv [OPTIONS] [TextFileName] [TextFileName1] ...	#
-#			[OPTIONS] are:-					#
-#	-h, --help Displays usage information.				#
-#	-u, --unix Convert to Unix line endings.			#
-#	-V, --version Displays version information.			#
-#	-w, --windows Convert to Windows line endings.			#
+# Syntax:      wutconv	[ -h || --help ] ||				#
+#			[ -u || --unix ] ||				#
+#			[ -V || --version ] ||				#
+#			[ -w || --windows ]				#
+#			TextFile1					#
+#			TextFile2					#
+#			...						#
 #									#
 # Exit Codes:	0 - success						#
 #		1 - failure						#
+#									#
+# Further Info:								#
 #									#
 #########################################################################
 
