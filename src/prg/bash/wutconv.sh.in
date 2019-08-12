@@ -63,6 +63,7 @@
 #				Use printf AOT echo.			#
 #				Replace #! env bash with absolute path	#
 #				via configure.				#
+#				Use awk location provided by configure.	#
 #									#
 #########################################################################
 
@@ -231,11 +232,11 @@ proc_CL "$@"
 # If no cmd line filenames then use stdin and stdout.
 if [[ ! $non_opt_args ]]; then
 	if $unix ; then	# Convert to Unix line endings.
-		awk '{if (substr($0,length,1)=="\r")
+		@awklocation@ '{if (substr($0,length,1)=="\r")
 			sub(/\r$/, "");
 			print;}'
 	else	# Convert to Windows line endings.
-		awk '{if (substr($0,length,1)!="\r")
+		@awklocation@ '{if (substr($0,length,1)!="\r")
 			sub(/$/, "\r");
 			print;}'
 	fi
@@ -257,7 +258,7 @@ for arg in $non_opt_args ; do
 	fi
 
 	if $unix ; then		# Convert to Unix
-		awk '{if (substr($0,length,1)=="\r")
+		@awklocation@ '{if (substr($0,length,1)=="\r")
 			sub(/\r$/, "");
 			print;}' $arg > $arg.tmp \
 			&& mv -f $arg.tmp $arg
@@ -267,7 +268,7 @@ for arg in $non_opt_args ; do
 		output "$msg" $status
 		std_cmd_err_handler $status
 	else	# Convert to Windows line endings.
-		awk '{if (substr($0,length,1)!="\r")
+		@awklocation@ '{if (substr($0,length,1)!="\r")
 			sub(/$/, "\r");
 			print;}' $arg > $arg.tmp \
 			&& mv -f $arg.tmp $arg
