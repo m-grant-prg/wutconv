@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: ./configure.ac						#
-# Author: Copyright (C) 2014-2018  Mark Grant				#
+# Author: Copyright (C) 2014-2019  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -55,10 +55,11 @@
 #				Because of this, other packaging should	#
 #				probably use the source tarball rather	#
 #				than a dist tarball.			#
+# 12/08/2019	MG	1.1.1	Add check for printf.			#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.10 $])
+AC_REVISION([$Revision: 1.1.1 $])
 
 AC_PREREQ([2.69])
 
@@ -193,6 +194,11 @@ AC_MSG_NOTICE([checking for generic programs required by this application])
 AC_CHECK_PROG([TAR], [tar], [yes], [no])
 if test "x$TAR" = "xno" ; then
 	AC_MSG_ERROR([tar not found])
+fi
+
+AC_CHECK_PROG(PRINTF, printf, yes, no)
+if test "x$PRINTF" = "xno" ; then
+	AC_MSG_WARN(printf not found - needed at run time)
 fi
 
 AC_CHECK_PROG([GETOPT], [getopt], [yes], [no])

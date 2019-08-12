@@ -60,6 +60,7 @@
 #				Refactor into functions.		#
 #				Improve legibility of main for loop.	#
 #				Utilise more powerful [[ ... ]]		#
+#				Use printf AOT echo.			#
 #									#
 #########################################################################
 
@@ -180,8 +181,8 @@ proc_CL()
 			shift
 			;;
 		-V|--version)
-			echo "$0 Script version "$version
-			echo "$0 Package version "$packageversion
+			printf "Script version %s\n" $version
+			printf "Package version %s\n" $packageversion
 			shift
 			script_exit 0
 			;;
