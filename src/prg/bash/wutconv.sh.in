@@ -27,8 +27,29 @@
 #			TextFile2					#
 #			...						#
 #									#
-# Exit Codes:	0 - success						#
-#		1 - failure						#
+# Exit codes used:-							#
+# Bash standard Exit Codes:	0 - success				#
+#				1 - general failure			#
+# User-defined exit code range is 64 - 113				#
+#	C/C++ Semi-standard exit codes from sysexits.h range is 64 - 78	#
+#		EX_USAGE	64	command line usage error	#
+#		EX_DATAERR	65	data format error		#
+#		EX_NOINPUT	66	cannot open input		#
+#		EX_NOUSER	67	addressee unknown		#
+#		EX_NOHOST	68	host name unknown		#
+#		EX_UNAVAILABLE	69	service unavailable		#
+#		EX_SOFTWARE	70	internal software error		#
+#		EX_OSERR	71	system error (e.g., can't fork)	#
+#		EX_OSFILE	72	critical OS file missing	#
+#		EX_CANTCREAT	73	can't create (user) output file	#
+#		EX_IOERR	74	input/output error		#
+#		EX_TEMPFAIL	75	temp failure; user is invited	#
+#					to retry			#
+#		EX_PROTOCOL	76	remote error in protocol	#
+#		EX_NOPERM	77	permission denied		#
+#		EX_CONFIG	78	configuration error		#
+#	User-defined (here) exit codes range 79 - 113:			#
+#		None							#
 #									#
 # Further Info:								#
 #									#
@@ -67,6 +88,7 @@
 #				Replace #! env bash with absolute path	#
 #				via configure.				#
 #				Use awk location provided by configure.	#
+#				Introduce more meaningful exit codes.	#
 #									#
 #########################################################################
 
@@ -146,7 +168,7 @@ trap_exit()
 	local msg
 
 	msg="Script terminating with exit code $exit_code due to trap received."
-	output "$msg" 1 0
+	output "$msg" 1
 	script_exit $exit_code
 }
 
@@ -178,7 +200,7 @@ proc_CL()
 		-u|--unix)
 			if $windows ; then
 				output "Cannot specify options u AND w." 1
-				script_exit 1
+				script_exit 64
 			fi
 			unix=true
 			shift
@@ -195,7 +217,7 @@ proc_CL()
 		-w|--windows)
 			if $unix ; then
 				output "Cannot specify options w AND u." 1
-				script_exit 1
+				script_exit 64
 			fi
 			windows=true
 			shift
@@ -204,7 +226,7 @@ proc_CL()
 			break
 			;;
 		*)	output "Internal error." 1
-			script_exit 1
+			script_exit 64
 			;;
 		esac
 	done
@@ -212,13 +234,13 @@ proc_CL()
 	# Either u or w flag must be set.
 	if ! $windows && ! $unix ; then
 		output "Either -u or -w must be set." 1
-		script_exit 1
+		script_exit 64
 	fi
 
 	# u and w flag cannot both be set.
 	if $windows && $unix ; then
 		output "-u and -w cannot both be set." 1
-		script_exit 1
+		script_exit 64
 	fi
 
 	# Save any filenames
@@ -253,11 +275,11 @@ for arg in $non_opt_args ; do
 	# Check file exists, is a regular file  and is readable and writeable
 	if [[ ! -f $arg ]]; then
 		output "File "$arg" does not exist or is not a regular file." 1
-		script_exit 1
+		script_exit 66
 	fi
 	if [[ ! -r $arg || ! -w $arg ]]; then
 		output "File "$arg" does not have the correct permissions." 1
-		script_exit 1
+		script_exit 77
 	fi
 
 	if $unix ; then		# Convert to Unix
