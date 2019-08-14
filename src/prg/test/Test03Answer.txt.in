@@ -1,0 +1,7 @@
+
+Test03.txt starts as a Unix LF line-terminated file.
+
+The test script re-directs the file to stdin and converts it to Windows CR/LF
+line-terminated and re-directs stdout to Test03Result.txt which should be
+equivalent to the Test03Answer.txt file.
+

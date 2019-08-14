@@ -1,0 +1,4 @@
+set -e
+../bash/wutconv --windows Test01.txt
+cmp Test01.txt Test01Answer.txt
+

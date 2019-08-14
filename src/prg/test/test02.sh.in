@@ -1,0 +1,4 @@
+set -e
+../bash/wutconv --unix Test02.txt
+cmp Test02.txt Test02Answer.txt
+

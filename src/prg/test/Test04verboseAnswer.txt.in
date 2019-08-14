@@ -1,0 +1,8 @@
+
+Test04verbose.txt starts as a Windows CR/LF line-terminated file.
+
+The test script re-directs the file to stdin and converts it to Unix LF
+line-terminated and re-directs stdout to Test04verboseResult.txt which should be
+equivalent to the Test04verboseAnswer.txt file.
+
+Script complete with exit code: 0

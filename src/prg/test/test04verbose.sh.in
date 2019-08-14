@@ -1,0 +1,4 @@
+set -e
+../bash/wutconv --verbose --unix < Test04verbose.txt > Test04verboseResult.txt
+cmp --verbose Test04verboseResult.txt Test04verboseAnswer.txt
+

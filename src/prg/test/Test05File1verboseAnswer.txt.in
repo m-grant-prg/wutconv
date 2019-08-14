@@ -1,0 +1,6 @@
+
+Test05File1verbose.txt starts as a Unix LF line-terminated file.
+
+The test script converts this to a Windows CR/LF line-terminated file which
+should be equivalent to the Test05File1verboseAnswer.txt file.
+

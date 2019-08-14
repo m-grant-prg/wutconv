@@ -73,10 +73,11 @@
 #				Because of this, other packaging should	#
 #				probably use the source tarball rather	#
 #				than a dist tarball.			#
-# 12/08/2019	MG	1.1.1	Add check for printf.			#
+# 13/08/2019	MG	1.1.1	Add check for printf.			#
 #				Revamp to latest standard format.	#
 #				Remove leading v from package version	#
 #				string.					#
+#				Add test directory for make check.	#
 #									#
 #########################################################################
 
@@ -304,6 +305,7 @@ AC_MSG_NOTICE(processing output files)
 # Project Makefiles to create.
 AC_CONFIG_FILES([Makefile
 		src/prg/bash/Makefile
+		src/prg/test/Makefile
 		src/man/1/Makefile])
 
 AC_OUTPUT

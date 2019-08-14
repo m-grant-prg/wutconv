@@ -31,7 +31,7 @@
 # 01/11/2018	MG	1.0.7	Change srctarball target to build with	#
 #				src between package name and version in	#
 #				filename.				#
-# 12/08/2019	MG	1.0.8	Change source tarball name to be the	#
+# 13/08/2019	MG	1.0.8	Change source tarball name to be the	#
 #				same as that in GitHub releases. This	#
 #				aids integrating with rpm generation.	#
 #				Add install of standard GNU files like	#
@@ -43,6 +43,7 @@
 #				/usr/share/java must be accommodated,	#
 #				so set the configure flags to be used	#
 #				by make distcheck.			#
+#				Add test directory for make check.	#
 #									#
 #########################################################################
 
@@ -53,7 +54,7 @@ ACLOCAL_AMFLAGS = -I m4
 AM_DISTCHECK_CONFIGURE_FLAGS =
 
 
-SUBDIRS = src/man/1 src/prg/bash
+SUBDIRS = src/man/1 src/prg/bash src/prg/test
 
 
 doc_DATA = AUTHORS ChangeLog COPYING NEWS README

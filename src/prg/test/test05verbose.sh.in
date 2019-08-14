@@ -1,0 +1,5 @@
+set -e
+../bash/wutconv --verbose --windows Test05File1verbose.txt Test05File2verbose.txt
+cmp --verbose Test05File1verbose.txt Test05File1verboseAnswer.txt
+cmp --verbose Test05File2verbose.txt Test05File2verboseAnswer.txt
+
