@@ -1,3 +1,36 @@
+2019-08-15 v 1.1.1 Mark Grant <m.grant.prg@gmail.com>
+	*  travis: Reinstate default build environment
+	test: Add test suite for make check
+	at: Update bootstrap.sh to v1.4.5
+	git: Update project root gitignore to v1.0.2
+	README: Add Copyright statement
+	README: Point bootstrap.sh section at acmbuild wiki
+	README: Make package install references generic
+	travis: Initial project setup
+	at: Set configure args for distcheck in top makefile
+	at: Remove shebangs from Makefiles
+	Install standard GNU files eg AUTHOR etc
+	Correct package versioning
+	Tidy up local / global variables
+	Introduce more meaningful exit codes
+	Standardise TOF header information
+	Use awk location provided by configure
+	Replace #! env bash with abs path from configure
+	at: configure.ac: Revamp to latest standard format
+	Use more standardised printf AOT echo
+	Utilise more powerfull [[ ... ]] construct
+	Refactor getopt CL processing into function
+	Improve legibility of main for processing loop
+	Standardise script exit function
+	Standardise trap handling
+	Standardise error handler function
+	Improve output function
+	Refactor help into function
+	Use true booleans
+	Adopt C style loops and if statements
+	Do not hardcode outputprefix
+	wutconv script still at version 1.1.1
+
 2018-11-01 v 1.0.15 Mark Grant <m.grant.prg@gmail.com>
 	*  srctarball to use -src- in filename
 	wutconv script still at version 1.0.10

@@ -1,3 +1,8 @@
+Release 1.1.1 2019-08-15
+Major AutoTools package improvements and bash script improvements, but no
+functional change. A summary of the technical changes can be found in the
+ChangeLog.
+
 Release 1.0.15 2018-11-01
 srctarball to use -src- in filename
 
