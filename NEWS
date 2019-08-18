@@ -1,3 +1,6 @@
+Release 1.1.2 2019-08-18
+Update man page return code section.
+
 Release 1.1.1 2019-08-15
 Major AutoTools package improvements and bash script improvements, but no
 functional change. A summary of the technical changes can be found in the

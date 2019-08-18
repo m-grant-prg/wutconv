@@ -1,3 +1,7 @@
+2019-08-18 v 1.1.2 Mark Grant <m.grant.prg@gmail.com>
+	*  Update man page return code section.
+	wutconv script still at version 1.1.1
+
 2019-08-15 v 1.1.1 Mark Grant <m.grant.prg@gmail.com>
 	*  travis: Reinstate default build environment
 	test: Add test suite for make check
