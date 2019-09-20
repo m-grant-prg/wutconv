@@ -90,6 +90,7 @@
 #				Use awk location provided by configure.	#
 #				Introduce more meaningful exit codes.	#
 #				Tidy up local and global variables.	#
+# 20/09/2019	MG	1.1.2	Correct help output.			#
 #									#
 #########################################################################
 
@@ -97,7 +98,7 @@
 ##################
 # Init variables #
 ##################
-readonly version=1.1.1				# Script version
+readonly version=1.1.2				# Script version
 readonly outputprefix="$(basename $0): "
 readonly packageversion=@pkgversion@		# Package version
 
@@ -117,7 +118,7 @@ usage ()
 {
 cat << EOF
 Usage is $0 [OPTIONS] TextFileName TextFileName1 ...
-	[OPTIONS] are:-"
+	[OPTIONS] are:-
 	-h or --help Displays usage information
 	-u or --unix Convert to Unix line endings
 	-v or --verbose verbose output
