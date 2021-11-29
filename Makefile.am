@@ -4,7 +4,7 @@
 # Author: Copyright (C) 2014-2019, 2021  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
-# SPDX-License-Identifier: GPL-3.0					#
+# SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
 # AutoMake script file to generate wutconv project from source.		#
@@ -45,6 +45,7 @@
 #				by make distcheck.			#
 #				Add test directory for make check.	#
 # 08/11/2021	MG	1.0.9	Add misc directory to DIST.		#
+# 29/11/2021	MG	1.0.10	Tighten SPDX tag.			#
 #									#
 #########################################################################
 

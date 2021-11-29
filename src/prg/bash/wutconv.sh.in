@@ -9,10 +9,10 @@
 #########################################################################
 #									#
 # Script ID: wutconv							#
-# Author: Copyright (C) 2014-2017, 2019  Mark Grant			#
+# Author: Copyright (C) 2014-2017, 2019, 2021  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
-# SPDX-License-Identifier: GPL-3.0					#
+# SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
 # Converts one or more text files to windows or unix line endings, or,	#
@@ -92,6 +92,7 @@
 #				Tidy up local and global variables.	#
 # 20/09/2019	MG	1.1.2	Correct help output.			#
 # 11/10/2019	MG	1.1.3	Move script_exit() before it is used.	#
+# 29/11/2021	MG	1.1.4	Tighten SPDX tag.			#
 #									#
 #########################################################################
 
@@ -99,7 +100,7 @@
 ##################
 # Init variables #
 ##################
-readonly version=1.1.3				# Script version
+readonly version=1.1.4				# Script version
 readonly outputprefix="$(basename $0): "
 readonly packageversion=@pkgversion@		# Package version
 
