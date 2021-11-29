@@ -1,3 +1,18 @@
+2021-11-29 v1.1.4 Mark Grant <m.grant.prg@gmail.com>
+	* all: Tighten SPDX tag
+	at: Add AC_COPYRIGHT macro
+	at: Upgrade bootstrap.sh to v1.4.10
+	git: Update mailmap to v1.0.2
+	git: Update gitignore to v1.0.7
+	git: Update gitattributes to v1.0.2
+	at: Use git to enhance package version
+	lxcu: Add openSUSE
+	lxcu: Add Fedora
+	at: Add misc directory to DIST
+	travis: Stop using Travis
+	actions: Initial build action setup
+	at: lxcu: Add lxc test build setup
+
 2020-08-02 v1.1.3 Mark Grant <m.grant.prg@gmail.com>
 	*  travis: Bionic is the new minimum release
 	at: README: Correct git command
