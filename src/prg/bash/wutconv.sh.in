@@ -248,6 +248,7 @@ proc_CL()
 	fi
 
 	# Save any filenames
+	# shellcheck disable=SC2124 # bash concatenates with a space - Fine
 	non_opt_args="$@"
 }
 
