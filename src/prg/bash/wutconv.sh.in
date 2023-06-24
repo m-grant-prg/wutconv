@@ -150,7 +150,7 @@ output()
 # No return value.
 script_exit()
 {
-	exit $1
+	exit "$1"
 }
 
 # Standard function to test command error and exit if non-zero.
@@ -159,7 +159,7 @@ script_exit()
 std_cmd_err_handler()
 {
 	if (( $1 )); then
-		script_exit $1
+		script_exit "$1"
 	fi
 }
 
@@ -278,19 +278,19 @@ fi
 for arg in $non_opt_args ; do
 	# Check file exists, is a regular file  and is readable and writeable
 	if [[ ! -f $arg ]]; then
-		output "File "$arg" does not exist or is not a regular file." 1
+		output "File $arg does not exist or is not a regular file." 1
 		script_exit 66
 	fi
 	if [[ ! -r $arg || ! -w $arg ]]; then
-		output "File "$arg" does not have the correct permissions." 1
+		output "File $arg does not have the correct permissions." 1
 		script_exit 77
 	fi
 
 	if $unix ; then		# Convert to Unix
 		@awklocation@ '{if (substr($0,length,1)=="\r")
 			sub(/\r$/, "");
-			print;}' $arg > $arg.tmp \
-			&& mv -f $arg.tmp $arg
+			print;}' "$arg" > "$arg".tmp \
+			&& mv -f "$arg".tmp "$arg"
 		status=$?
 		msg="Converted file "$arg" to Unix format "
 		msg+="complete with status "$status
@@ -299,8 +299,8 @@ for arg in $non_opt_args ; do
 	else	# Convert to Windows line endings.
 		@awklocation@ '{if (substr($0,length,1)!="\r")
 			sub(/$/, "\r");
-			print;}' $arg > $arg.tmp \
-			&& mv -f $arg.tmp $arg
+			print;}' "$arg" > "$arg".tmp \
+			&& mv -f "$arg".tmp "$arg"
 		status=$?
 		msg="Converted file "$arg" to Windows format "
 		msg+="complete with status "$status
