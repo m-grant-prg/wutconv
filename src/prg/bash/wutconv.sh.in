@@ -293,7 +293,7 @@ for arg in $non_opt_args ; do
 			print;}' "$arg" > "$arg".tmp \
 			&& mv -f "$arg".tmp "$arg"
 		status=$?
-		msg="Converted file "$arg" to Unix format "
+		msg="Converted file $arg to Unix format "
 		msg+="complete with status "$status
 		output "$msg" $status
 		std_cmd_err_handler $status
@@ -303,7 +303,7 @@ for arg in $non_opt_args ; do
 			print;}' "$arg" > "$arg".tmp \
 			&& mv -f "$arg".tmp "$arg"
 		status=$?
-		msg="Converted file "$arg" to Windows format "
+		msg="Converted file $arg to Windows format "
 		msg+="complete with status "$status
 		output "$msg" $status
 		std_cmd_err_handler $status
