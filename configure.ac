@@ -1,6 +1,5 @@
 #########################################################################
 #									#
-# Script ID: ./configure.ac						#
 # Author: Copyright (C) 2014-2023  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
@@ -13,7 +12,6 @@
 # ./configure								#
 #									#
 # Layout: (Only relevant sections will exist).				#
-# ChangeLog : High level ChangeLog					#
 # SECTION  1: Initialisation & Setup					#
 # SECTION  2: Architecture, target and host checks			#
 # SECTION  3: Command line arguments					#
@@ -29,63 +27,6 @@
 # SECTION 13: Check for system services					#
 # SECTION 14: Additional checks & variables				#
 # SECTION 15: Specify the output files					#
-#									#
-#########################################################################
-
-#########################################################################
-#									#
-# Changelog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 04/09/2014	MG	1.0.1	First release.				#
-# 29/11/2014	MG	1.0.2	Remove redundant hashpling.		#
-# 29/11/2014	MG	1.0.3	Add getopt processing to allowing for	#
-#				FreeBSD quirk of 2 different getopt	#
-#				programs on PATH. See comments in	#
-#				script at the start of "Main". 		#
-#				Structure OS specific requirements to	#
-#				test for generic *BSD OSs and use	#
-#				Linux as the default.			#
-# 29/11/2014	MG	1.0.4	Add support for passing overall package	#
-#				version to Makefiles.			#
-# 26/06/2015	MG	1.0.5	Remove BSD support.			#
-# 23/10/2015	MG	1.0.6	Restructure to conform to AutoTools	#
-#				General Template v1.0.6.		#
-# 02/05/2017	MG	1.0.7	Make AC_INIT and pkgversion AC_SUBST	#
-#				multi-line.				#
-#				Fully populate sed substitution		#
-#				variable.				#
-#				Some cosmetic standardisation.		#
-# 02/12/2017	MG	1.0.8	Add SPDX license tags to source files.	#
-# 10/02/2018	MG	1.0.9	Shorten directory names to reduce	#
-#				overall path length.			#
-#				Update minimum AutoTools version.	#
-#				Standardise configure.ac and macro	#
-#				directory.				#
-# 13/04/2018	MG	1.0.10	Change package versioning to use	#
-#				hard-coded value. This is due to the	#
-#				use of github which produces source	#
-#				tarballs which can be used for package	#
-#				generation. These tarballs are used	#
-#				outside of git so git versioning is not	#
-#				possible, hence the hard-coded value.	#
-#				Because of this, other packaging should	#
-#				probably use the source tarball rather	#
-#				than a dist tarball.			#
-# 13/08/2019	MG	1.1.1	Add check for printf.			#
-#				Revamp to latest standard format.	#
-#				Remove leading v from package version	#
-#				string.					#
-#				Add test directory for make check.	#
-# 28/11/2021	MG	1.1.2	If git is available and we are inside a	#
-#				git tree then use git describe to add	#
-#				further package version information.	#
-#				Add AC_COPYRIGHT macro.			#
-#				Tighten SPDX tag.			#
-# 10/10/2022	MG	1.1.3	Separate AutoTools generated files from	#
-#				project root.				#
-# 28/03/2023	MG	1.1.4	Update Copyright for 2023.		#
 #									#
 #########################################################################
 

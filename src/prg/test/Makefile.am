@@ -1,24 +1,12 @@
 #########################################################################
 #									#
-# Script ID: src/prg/test/Makefile.am					#
-# Author: Copyright (C) 2019, 2021  Mark Grant				#
+# Author: Copyright (C) 2019, 2021, 2023  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
 #	AutoMake script file to generate wutconv test program.		#
-#									#
-#########################################################################
-
-#########################################################################
-#									#
-# Changelog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 14/08/2019	MG	1.0.1	First release.				#
-# 29/11/2021	MG	1.0.2	Tighten SPDX tag.			#
 #									#
 #########################################################################
 
