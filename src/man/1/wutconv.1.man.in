@@ -1,7 +1,9 @@
 NAME
 wutconv - converts input lines to Windows or Unix line endings.
 SYNOPSIS
-wutconv [OPTION] [TextFileName] [TextFileName1] ...
+wutconv {-u|-w} [-v] [TEXT_FILE_NAME ...]
+wutconv {-h|-V}
+wutconv [OPTIONS] [TEXT_FILE_NAME ...]
 DESCRIPTION
 Converts the line endings in one or more text files to Windows or Unix format,
 i.e. LFCR or LF.
@@ -13,6 +15,7 @@ OPTIONS
 -v, --verbose	Display verbose output.
 -V, --version	Displays version information.
 -w, --windows	Convert to Windows line endings.
+TEXT_FILE_NAME	List of text file names. If blank, stdin and stdout are used.
 EXIT STATUS
 0 - Success
 .br
@@ -28,7 +31,7 @@ Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2014-2017, 2019, 2021 Mark Grant.
+Copyright (C) 2014-2017, 2019, 2021, 2024 Mark Grant.
 .br
 License GPLv3: GNU GPL version 3 only
 .br
