@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Author: Copyright (C) 2014-2023  Mark Grant				#
+# Author: Copyright (C) 2014-2024  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -8,8 +8,8 @@
 # Purpose:								#
 # AutoConf script file to configure wutconv project.			#
 #									#
-# configure cmd line syntax:-						#
-# ./configure								#
+# cmd line syntax of standard configure:				#
+# ./configure --help							#
 #									#
 # Layout: (Only relevant sections will exist).				#
 # SECTION  1: Initialisation & Setup					#
@@ -37,11 +37,11 @@
 #					#
 #########################################
 
-AC_COPYRIGHT([Copyright (C) 2014-2023  Mark Grant
+AC_COPYRIGHT([Copyright (C) 2014-2024  Mark Grant
 	      This script is free to copy or distribute under the terms set out
 	      in the package license. See COPYING for details.])
 
-AC_REVISION([$Revision: 1.1.4 $])
+AC_REVISION([$Revision: 1.1.5 $])
 
 AC_PREREQ([2.69])
 
