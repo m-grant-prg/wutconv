@@ -8,7 +8,7 @@
 
 #########################################################################
 #									#
-# Author: Copyright (C) 2014-2017, 2019, 2021, 2023  Mark Grant		#
+# Author: Copyright (C) 2014-2017, 2019, 2021, 2023, 2024  Mark Grant	#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -18,13 +18,7 @@
 # if no text files are specified on the command line, then stdin is 	#
 # converted to stdout.							#
 #                                                              		#
-# Syntax:      wutconv	[ -h || --help ] ||				#
-#			[ -u || --unix ] ||				#
-#			[ -V || --version ] ||				#
-#			[ -w || --windows ]				#
-#			TextFile1					#
-#			TextFile2					#
-#			...						#
+# Syntax:      See usage().						#
 #									#
 # Exit codes used:-							#
 # Bash standard Exit Codes:	0 - success				#
@@ -58,7 +52,7 @@
 ##################
 # Init variables #
 ##################
-readonly version=1.2.0				# Script version
+readonly version=1.2.1				# Script version
 readonly packageversion=@pkgversion@		# Package version
 
 unix=false
@@ -73,16 +67,20 @@ verbosity=""
 # -h --help output.
 # No parameters
 # No return value
-usage ()
+usage()
 {
 cat << EOF
-Usage is $0 [OPTIONS] TextFileName TextFileName1 ...
-	[OPTIONS] are:-
+Usage is:-
+$(basename "$0") {-u|-w} [-v] [TEXT_FILE_NAME ...]
+$(basename "$0") {-h|-V}
+Usage is:-
+$(basename "$0") [OPTIONS] [TEXT_FILE_NAME ...]
 	-h or --help Displays usage information
 	-u or --unix Convert to Unix line endings
 	-v or --verbose verbose output
 	-V or --version Displays version information
 	-w or --windows Convert to Windows line endings
+	List of text file names. If blank, stdin and stdout are used.
 EOF
 }
 
