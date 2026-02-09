@@ -1,0 +1,33 @@
+#########################################################################
+#									#
+# Author: Copyright (C) 2026  Mark Grant				#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0-only					#
+#									#
+# Purpose:								#
+# AutoMake script file to generate bash completion scripts from source.	#
+#									#
+#########################################################################
+
+
+bashcompdir = $(datadir)/bash-completion/completions
+
+
+wutconv: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).sh.in > $@.tmp
+	mv $@.tmp $@
+wutconv: $(srcdir)/wutconv.sh.in
+
+
+bashcomp_DATA = wutconv
+
+
+EXTRA_DIST = $(srcdir)/wutconv.sh.in
+
+
+CLEANFILES = *.tmp wutconv
+
