@@ -15,6 +15,8 @@
 _wutconv()
 {
 	local cur OPTS
+	local old_IFS="$IFS"
+	local IFS
 
 	COMPREPLY=()
 	cur="${COMP_WORDS[COMP_CWORD]}"
@@ -22,9 +24,15 @@ _wutconv()
 	OPTS="-h -u -v -V -w"
 	OPTS+=" --help --unix --verbose --version --windows"
 
+	IFS=$'\n'
+	compopt -o filenames
 	# shellcheck disable=SC2207  # This is _the_ bash completion pattern,
 	# so leave it be.
-	COMPREPLY=( $(compgen -f -o plusdirs -W "${OPTS[*]}" -- "$cur") )
+	COMPREPLY=( $(compgen -f -- "${cur}") )
+	IFS="$old_IFS"
+	# shellcheck disable=SC2207  # This is _the_ bash completion pattern,
+	# so leave it be.
+	COMPREPLY+=( $(compgen -W "${OPTS[*]}" -- "${cur}") )
 	return 0
 }
 complete -F _wutconv wutconv
