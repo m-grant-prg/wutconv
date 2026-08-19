@@ -1,4 +1,8 @@
 set -e
+
+cd "$(dirname "$0")"
+
 ../bash/wutconv --unix Test02.txt
+
 cmp Test02.txt Test02Answer.txt
 

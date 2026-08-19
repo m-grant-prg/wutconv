@@ -1,5 +1,10 @@
 set -e
+
+cd "$(dirname "$0")"
+
 ../bash/wutconv --verbose --unix Test06File1verbose.txt Test06File2verbose.txt
+
 cmp --verbose Test06File1verbose.txt Test06File1verboseAnswer.txt
+
 cmp --verbose Test06File2verbose.txt Test06File2verboseAnswer.txt
 

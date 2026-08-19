@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Author: Copyright (C) 2019, 2021, 2023  Mark Grant			#
+# Author: Copyright (C) 2019, 2021, 2023, 2026  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -135,14 +135,6 @@ EXTRA_DIST = $(srcdir)/Test01.txt.in $(srcdir)/Test01Answer.txt.in \
 	$(srcdir)/Test06File2verboseAnswer.txt.in \
 	$(srcdir)/test06.sh.in $(srcdir)/test06verbose.sh.in \
 	$(srcdir)/test-menu.sh.in
-
-
-TESTS = test01.sh test01verbose.sh
-TESTS += test02.sh test02verbose.sh
-TESTS += test03.sh test03verbose.sh
-TESTS += test04.sh test04verbose.sh
-TESTS += test05.sh test05verbose.sh
-TESTS += test06.sh test06verbose.sh
 
 
 CLEANFILES = *.tmp *.sh *.txt

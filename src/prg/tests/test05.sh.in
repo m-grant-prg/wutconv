@@ -1,5 +1,10 @@
 set -e
+
+cd "$(dirname "$0")"
+
 ../bash/wutconv --windows Test05File1.txt Test05File2.txt
+
 cmp Test05File1.txt Test05File1Answer.txt
+
 cmp Test05File2.txt Test05File2Answer.txt
 
