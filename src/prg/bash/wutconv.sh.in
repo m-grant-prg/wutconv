@@ -172,8 +172,8 @@ proc_CL()
 			shift
 			;;
 		-V|--version)
-			printf "Script version %s\n" $version
-			printf "Package version %s\n" $packageversion
+			printf "Script version %s\n" "$version"
+			printf "Package version %s\n" "$packageversion"
 			shift
 			script_exit 0
 			;;
@@ -253,8 +253,8 @@ for arg in "${non_opt_args[@]}" ; do
 		status=$?
 		msg="Converted file $arg to Unix format "
 		msg+="complete with status "$status
-		output "$msg" $status
-		std_cmd_err_handler $status
+		output "$msg" "$status"
+		std_cmd_err_handler "$status"
 	else	# Convert to Windows line endings.
 		@awklocation@ '{if (substr($0,length,1)!="\r")
 			sub(/$/, "\r");
@@ -263,8 +263,8 @@ for arg in "${non_opt_args[@]}" ; do
 		status=$?
 		msg="Converted file $arg to Windows format "
 		msg+="complete with status "$status
-		output "$msg" $status
-		std_cmd_err_handler $status
+		output "$msg" "$status"
+		std_cmd_err_handler "$status"
 	fi
 done
 
