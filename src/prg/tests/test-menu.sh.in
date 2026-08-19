@@ -30,7 +30,6 @@
 # Init variables #
 ##################
 readonly version=1.1.1				# Script version
-readonly outputprefix="$(basename $0): "
 readonly packageversion=@pkgversion@		# Package version
 declare -i exit_code
 
