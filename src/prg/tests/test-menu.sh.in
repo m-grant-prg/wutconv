@@ -147,7 +147,7 @@ printf "z) Run all tests - verbose\n"
 
 # Get selection
 printf "\n"
-read -p "Enter your selection: " selection
+read -pr "Enter your selection: " selection
 std_cmd_err_handler $?
 
 case "$selection" in
