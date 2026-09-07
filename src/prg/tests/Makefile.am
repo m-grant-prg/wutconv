@@ -25,6 +25,7 @@ Test06File2verbose.txt Test06File2verboseAnswer.txt: Makefile
 	rm -f $@ $@.tmp
 	test -f ./$@.in || srcdir=$(srcdir)/; \
 	cp $${srcdir}$(@F).in  $@
+	chmod u+w $@
 Test01.txt: $(srcdir)/Test01.txt.in
 Test01Answer.txt: $(srcdir)/Test01Answer.txt.in
 Test01verbose.txt: $(srcdir)/Test01verbose.txt.in
